@@ -21,14 +21,33 @@ class TestModels(APITestCase):
     
     def test_create_user_without_username(self):       
         self.assertRaises(ValueError,User.objects.create_user,username="",email="admin@gmail.com")
+        
+    def test_create_user_without_username_message(self):
+        with self.assertRaisesMessage(ValueError,'The given username must be set'):
+           User.objects.create_user(username="", email="admin@gmail.com")
+            
    
     def test_create_user_without_email(self):       
         self.assertRaises(ValueError,User.objects.create_user,username="admin",email="")
+        
+    def test_create_user_without_email_message(self):
+        with self.assertRaisesMessage(ValueError,'The given email must be set'):
+            User.objects.create_user(username="admin",email="")
         
         
     def test_create_super_user_is_staff(self):
         self.assertRaises(ValueError,User.objects.create_superuser,username="rukesh", email="rukesh@gmail.com",is_staff=False)
         
+    def test_create_super_user_is_staff_message(self):
+        with self.assertRaisesMessage(ValueError,'Superuser must have is_staff=True.'):
+            User.objects.create_superuser(username="rukesh", email="rukesh@gmail.com",is_staff=False)
+    
+        
+        
     def test_create_super_user_is_superuser(self):
         self.assertRaises(ValueError,User.objects.create_superuser,username="rukesh", email="rukesh@gmail.com",is_superuser=False)
+        
    
+    def test_create_super_user_is_superuser_message(self):
+        with self.assertRaisesMessage(ValueError,'Superuser must have is_superuser=True.'):
+            User.objects.create_superuser(username="rukesh", email="rukesh@gmail.com",is_superuser=False)
