@@ -3,6 +3,7 @@ from django.urls import path
 from .views import tasks,detailtask,posttask,updatetask,deletetask
 
 urlpatterns = [
+  
     path('', tasks,name='tasks'),
     path('<int:pk>/', detailtask,name='task'),
     path('post/',posttask,name='posttask'),
